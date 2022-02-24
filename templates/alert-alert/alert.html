@@ -1,0 +1,30 @@
+  <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <!-- vai aparecer a mensagem de gravado com sucesso-->
+                        {%with success_messages = get_flashed_messages(category_filter=['success'])%}
+                        {%if success_messages %}
+                        <div class="alert alert-success">
+
+                            {%for message in success_messages%}
+                            {{message}}
+                            {%endfor%}
+                        </div>
+                        {%endif%}
+                        {%endwith%}
+
+                         {%with error_messages = get_flashed_messages(category_filter=['warning'])%}
+                        {%if error_messages %}
+                        <div class="alert alert-warning">
+
+                            {%for message in error_messages%}
+                            {{message}}
+                            {%endfor%}
+
+                        </div>
+                        {%endif%}
+                        {%endwith%}
+                    </div>
+                </div>
+             </div>

@@ -1,0 +1,79 @@
+   {% extends "layout.html"%}
+
+  {% block main %}
+
+            <div class="row">
+                <div class="col-md-12 text-center mt-5 mb-3 text-light" >
+                    <h2> Inserir Banco de Dados</h2>
+            </div>
+        </div>
+
+        <form action="{{ url_for('insert_task') }}" method="POST">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control fundo2" placeholder="Digite seu texto" name="name">
+              <button class="btn btn-outline-light btn-primary" type="submit" id="button-addon2">Enviar</button>
+           </div>
+             <div class="container " >
+                <div class="row">
+                    <div class="col-md-12">
+                          <hr>
+                    </div>
+                </div>
+             </div>
+
+           {% include "alert-alert/alert.html"%}
+
+
+                <div class="row">
+                    <div class="col-md-10 text-end"> Filtar:     </div>
+                    <div class="col-md-2 ">
+                        <select class="form-select " aria-label="Default select example">
+                          <option selected>Opções</option>
+                          <option value="1">Todos</option>
+                          <option value="2">Incuidos</option>
+                          <option value="3">fixados</option>
+                        </select>
+                    </div>
+                </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12"> <h5 class="text-primary mt-5 mb-2">Seus projetos {{tasks | length }}</h5></div>
+                    <table class="table">
+          <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tarefa</th>
+                  <th scope="col">Data</th>
+
+                </tr>
+          </thead>
+          <tbody>
+                 {%for task in tasks%}
+                <tr class="{{'completed' if task['completed'] else ''}}">
+                  <th scope="row">{{ task["id"] }}</th>
+                  <td>{{task["title"]}}</td>
+                  <td>{{task["daytime"]}}</td>
+
+                  <td width="180">
+                      {% if task['completed'] %}
+                      <a href="{{ url_for('switch_task', id=task['id']) }}?status={{task['completed']}}" class="btn btn-warning btn-sm" ><i class="bi bi-pin-angle"></i>Desfixa</a>
+                      {%else%}
+                      <a href="{{ url_for('switch_task', id=task['id']) }}?status={{task['completed']}}" class="btn btn-success btn-sm" ><i class="bi bi-hand-thumbs-up"></i> Incluir</a>
+                      {%endif%}
+                      <a href="{{ url_for('remove', id=task['id']) }}" class="btn btn-danger btn-sm "><i class="bi bi-trash"></i> Excluir</a>
+                  </td>
+                </tr>
+
+                 {%endfor%}
+
+          </tbody>
+         </table>
+             </div>
+            </div>
+
+
+    </form>
+
+  {% endblock %}
